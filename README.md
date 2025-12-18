@@ -106,13 +106,13 @@ Analysis Engine Predictions → http://localhost:8086/metrics
 
 👥 Contributors
 
-| Name                          | Contribution                                                   |
-| ----------------------------- | ---------------------------------------------------------------|
-| **Devam Dharmendrabhai Shah** | Lead Development, Extension Development, Research, CI/CD       |                                                    |
+| Name                          | Contribution                                           |
+| ----------------------------- | -------------------------------------------------------|
+| **Devam Dharmendrabhai Shah** | Lead Development, Extension Development, Research, CI/CD                              |                                                        |
 | **Nafis Bhamjee**             | Architecture, Prometheus/Grafana Integration   		 |
-| **Canchi Sathya**             | Validation, Documentation                                    	 |
-| **Ankita Jayraj Patel**       | Documentation, Research, Configuration                         |
-| **Oluwadamifola Ademoye**     | Documentation                                      		 |
+| **Canchi Sathya**             | Validation, Documentation                              |
+| **Ankita Jayraj Patel**       | Documentation, Research, Configuration                 |
+| **Oluwadamifola Ademoye**     | Documentation                                   		 |
 
 
 Guided by:
