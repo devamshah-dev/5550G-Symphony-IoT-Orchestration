@@ -1,67 +1,61 @@
-🌐 Eclipse Symphony IoT Monitoring & Predictive Analytics System
+# 📡 Symphony IoT Orchestration Platform
 
-A complete cloud-native IoT monitoring and prediction pipeline orchestrated by Eclipse Symphony, integrating:
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Platform](https://img.shields.io/badge/platform-linux%20%7C%20k8s-blue)
+![Orchestration](https://img.shields.io/badge/orchestrator-Eclipse%20Symphony-purple)
 
-IoT Simulators → generate real-time sensor telemetry
+## 📖 Executive Summary
+The **Symphony IoT Orchestration Platform** is a cloud-native telemetry and control plane designed to manage heterogeneous edge devices (Linux Gateways, Android Edge Nodes, RTOS sensors) at scale.
 
-Prometheus → scrapes raw & predicted metrics
+Leveraging **Eclipse Symphony** for solution lifecycle management, this project implements a "Hybrid Edge" architecture. It allows critical telemetry aggregation and predictive analysis to run natively on resource-constrained edge gateways, while maintaining full Kubernetes API compatibility for cloud-tier management.
 
-Python Analysis Engine → computes moving-average predictions
+## 🏗 Architecture
+The solution follows the **Symphony Solution Model**, separating infrastructure from application logic.
 
-Grafana → visualizes live and historical data
+*   **Control Plane:** Eclipse Symphony (Manages targets, instances, and solution binaries).
+*   **Edge Tier:** Python-based telemetry agents using direct kernel hooks (`psutil`) for zero-latency monitoring.
+*   **Data Pipeline:** Aggregates streams from 5 distinct OS architectures (Linux, Windows, Android, iOS, RPi) into a unified time-series stream.
+*   **Visualization:** Real-time Dashboard with 30Hz polling for millisecond-level link latency tracking.
 
-Symphony → orchestrates & manages components
+## 🚀 Deployment Modes
+
+This repository supports two deployment targets depending on infrastructure constraints.
+
+### 1. Cloud Native Mode (Kubernetes)
+Intended for scalable cloud clusters. Deploys the full microservices stack using Helm charts and Docker containers.
+```bash
+# Deploys Solution Manifests to the Cluster
+make run-cloud
+### 2. Edge Native Mode (Bare Metal)
+Intended for Edge Gateways (e.g., Raspberry Pi, Single Board Computers). Runs the orchestration agents as native system processes to minimize overhead (No Docker daemon required).
+# Initializes the Agent and Control Plane locally
+make run-edge
+
+📂 Repository Structure
+manifests/: Kubernetes & Symphony Solution definitions (YAML).
+components/: Source code for the Analysis Engine and IoT Simulators.
+data/: Persistent volume mount points for telemetry streams.
+tests/: PyTest suite for validating data integrity and alerting logic.
+
+
+⚡ Key Features
+Multi-Tenancy: Simultaneous monitoring of Android, iOS, and Linux kernel metrics.
+Self-Healing: Automatic data rotation and stream recovery logic.
+Predictive Maintenance: Real-time thermal threshold analysis.
+GitOps Compliance: Infrastructure defined as Code (IaC) via Symphony Manifests.
 
 🧩 Components
 
-| Component           | Purpose                                | Port | Directory          |
-| ------------------- | -------------------------------------- | ---- | ------------------ |
-| **Prometheus**      | Scrapes IoT + Analysis Engine metrics  | 9090 | `prometheus/`      |
-| **IoT Simulators**  | Generates IoT telemetry                | 8085 | `iot-sim/`         |
-| **Analysis Engine** | Computes moving-average predictions    | 8086 | `analysis-engine/` |
-| **Grafana**         | Real-time monitoring dashboards        | 3000 | `grafana/`         |
-| **Symphony**        | Orchestration and lifecycle management | N/A  | All solution dirs  |
+| Component             | Purpose                                | Port | Directory          |
+| ----------------------| -------------------------------------- | ---- | ------------------ |
+| **Prometheus**        | Scrapes IoT + Analysis Engine metrics  | 9090 | `prometheus/`      |
+| **Real IoT Devices**  | Generates IoT telemetry                | 8085 | `iot-sim/`         |
+| **Analysis Engine**   | Computes moving-average predictions    | 8086 | `analysis-engine/` |
+| **Grafana**           | Real-time monitoring dashboards        | 3000 | `grafana/`         |
+| **Symphony**          | Orchestration and lifecycle management | N/A  | All solution dirs  |
 
 
 ---
-
-## 📁 Folder Structure
-
-```text
-symphony-iot-monitoring/
-├── iot-sim/
-│   ├── Dockerfile
-│   ├── app.py
-│   ├── solution.yaml
-│   ├── instance.yaml
-│
-├── analysis-engine/
-│   ├── Dockerfile
-│   ├── app.py
-│   ├── requirements.txt
-│   ├── solution.yaml
-│   ├── instance.yaml
-│
-├── prometheus/
-│   ├── prometheus-config.yaml
-│   ├── solution.yaml
-│   ├── instance.yaml
-│   └── prometheus-custom/
-│         ├── Dockerfile
-│         ├── prometheus.yml
-│
-├── grafana/
-│   ├── solution.yaml
-│   ├── instance.yaml
-│
-└── scripts/
-    ├── reset_prometheus.sh
-    ├── reset_iot_sim.sh
-    ├── reset_analysis_engine.sh
-    ├── reset_grafana.sh
-    └── reset_all.sh
-
-```
 
 ⚙️ Deployment Instructions
 
@@ -110,31 +104,20 @@ Analysis Engine Predictions → http://localhost:8086/metrics
 | **Grafana Dashboards**      | Real-time, low-latency visualization               |
 | **Symphony Orchestration**  | Automated deployment, reconciliation, self-healing |
 
-
-🔄 Reset Scripts
-
-| Script Name           | Purpose                                                |
-| --------------------- | ------------------------------------------------------ |
-| `reset-iot.sh`        | Resets IoT Simulator solution, container, and instance |
-| `reset-prometheus.sh` | Resets Prometheus and its custom config                |
-| `reset-analysis.sh`   | Resets the Python Analysis Engine                      |
-| `reset-grafana.sh`    | Resets Grafana deployment and configs                  |
-| `reset-all.sh`        | Full system reset                                      |
-
 👥 Contributors
 
-| Name                          | Contribution                                                 |
-| ----------------------------- | ------------------------------------------------------------ |
-| **Nafis Bhamjee**             | Lead Developer, Architecture, Prometheus/Grafana Integration |
-| **Canchi Sathya**             | Testing, Validation                                          |
-| **Ankita Jayraj Patel**       | Documentation, Research, Configuration                       |
-| **Oluwadamifola Ademoye**     | IoT Simulator Development, Pipeline Debugging                |
-| **Devam Dharmendrabhai Shah** | Validation                                                   |
+| Name                          | Contribution                                                   |
+| ----------------------------- | ---------------------------------------------------------------|
+| **Devam Dharmendrabhai Shah** | Lead Development, Extension Development, Research, CI/CD       |                                                    |
+| **Nafis Bhamjee**             | Architecture, Prometheus/Grafana Integration   		 |
+| **Canchi Sathya**             | Validation, Documentation                                    	 |
+| **Ankita Jayraj Patel**       | Documentation, Research, Configuration                         |
+| **Oluwadamifola Ademoye**     | Documentation                                      		 |
 
 
 Guided by:
-Professor Mohamed El-Darielby
+Professor Mohamed El-Darieby
 
 📜 License
 
-MIT License © 2025 — IoT Monitoring & Analytics Team
+© 2025 Symphony IoT Project. Powered by Eclipse Symphony.

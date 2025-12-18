@@ -1,0 +1,6 @@
+streamlit
+pandas
+flask
+prometheus_client
+psutil
+pytest
