@@ -20,14 +20,13 @@ def test_device_personality_ranges():
     
     # Load data if available
     try:
-        rpi = pd.read_csv('data/raw_sources/rpi_sim.csv')
-        ios = pd.read_csv('data/raw_sources/ios_sim.csv')
+        rpi = pd.read_csv('data/raw_sources/rpi_data.csv')
+        ios = pd.read_csv('data/raw_sources/ios_data.csv')
         
         avg_rpi_temp = rpi['temp'].mean()
         avg_ios_temp = ios['temp'].mean()
         
-        # RPi (Passive cooling) should theoretically be hotter than iOS (Active/Efficient)
-        # This confirms our simulation parameters were applied correctly
+        # RaspberryPi (Passive cooling) should theoretically be hotter than iOS (Active/Efficient)
         assert avg_rpi_temp > avg_ios_temp, "Simulation Logic Fail: RPi should be hotter than iOS"
     except FileNotFoundError:
         pytest.skip("Simulation data not found. Skipping logic test.")

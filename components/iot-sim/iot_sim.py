@@ -28,8 +28,7 @@ for device_name, file_path in files.items():
     else:
         print(f"Warning: Missing {file_path}. Skipping {device_name}.")
 
-# Create iterators for each dataframe
-# iterrows() yields (index, Series)
+# Create iterators for each dataframe & iterrows() yields (index, Series)
 iterators = {k: df.iterrows() for k, df in dfs.items()}
 
 print(" [Symphony Agent] Starting Multi-Device Stream Aggregation...")
@@ -66,7 +65,6 @@ while True:
     for device, iterator in iterators.items():
         try:
             _,row = next(iterator)
-            # Add a bit of randomness to fake data so it doesn't look static
             current_data.append({
                 'timestamp': datetime.now(),
                 'device_type': device.capitalize(),
